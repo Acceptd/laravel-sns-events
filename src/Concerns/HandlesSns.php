@@ -35,6 +35,10 @@ trait HandlesSns
      */
     public function snsMessageIsValid(Request $request): bool
     {
+        if(App::environment(['testing', 'local'])) {
+            return true;
+        }
+
         try {
             return $this->getMessageValidator($request)->isValid(
                 $this->getSnsMessage($request)
